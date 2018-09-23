@@ -16,72 +16,36 @@ root: ..
 You should now see two new folders called `data` and `code` in your `swc-python` directory on your
 Desktop.
 
-&nbsp; <!-- vertical spacer -->
+### Running Python
+
+If you're using macOS, you should run the Anaconda Navigator (installed in `/Users/<username>/anaconda3/bin` by default unless you've moved it to `Applications`) and then go to Environments -> base(root) 'Play' button -> 'Open Terminal'. This gives you a terminal that has all
+the shell commands available that you've learnt already but also allows you to run python as well.
+
+<img src="../fig/shell-anaconda.png" alt="drawing" width="40%"/>
+
+If you're using Windows, you should run git-bash as you did for the shell lesson. After that, you need to enter the following commands:
+
+```
+export PATH="$PATH:/c/Users/$USERNAME/AppData/Local/Continuum/anaconda3/Scripts/:/c/Users/$USERNAME/AppData/Local/Continuum/anaconda3/"
+```
 
 ### Navigate to the `data` folder
 
-If you're using a Unix shell application, such as Terminal app in macOS, Console or Terminal in
-Linux, or [Git Bash](https://gitforwindows.org/) on Windows, execute the following command:
+Whether you are on macOS or Windows you should now be at a Shell prompt that is capable of running
+Python. You should now navigate to your data directory:
 
 ~~~
 $ cd ~/Desktop/swc-python/data
 ~~~
 {: .source}
 
-On Windows, you can use its native Command Prompt program.  The easiest way to start it up is by
-pressing <kbd>Windows Logo Key</kbd>+<kbd>R</kbd>, entering `cmd`, and hitting <kbd>Enter</kbd>. In
-the Command Prompt, use the following command to navigate to the `data` folder:
-~~~
-$ cd /D %userprofile%\Desktop\swc-python\data
-~~~
-{: .source}
+### Start IPython interpreter
 
-&nbsp; <!-- vertical spacer -->
-
-### Option 1: Launch Plain Vanilla Python interpreter
-
-To start working with Python, we need to launch a program that will interpret and execute our Python
-commands. To launch a "plain vanilla" Python interpreter, execute:
-~~~
-$ python
-~~~
-{: .source}
-
-If you are using Git Bash on Windows, you have to call Python _via_ `winpty`:
-~~~
-$ winpty python
-~~~
-{: .source}
-
-&nbsp; <!-- vertical spacer -->
-
-### Option 2: Start Jupyter notebook
-
-Jupyter notebooks provide a browser-based interface for working with Python.  If you would like to
-use a notebook during the lesson, make sure to install [Anaconda
-Distribution](http://carpentries.github.io/workshop-template/#python).
-
-To start a Jupyter server, execute:
-~~~
-$ jupyter notebook
-~~~
-{: .source}
-
-Then create a new notebook by clicking "New" button on the right and selecting "Python 3" from the
-drop-down menu:
-
-![](../fig/new-notebook.png)
-
-&nbsp; <!-- vertical spacer -->
-
-### Option 3: Start IPython interpreter
-
-IPython is an alternative solution situated somewhere in between the plain vanilla Python
-interpreter and Jupyter notebooks.  It provides an interactive command-line based interpreter with
+IPython is an alternative interpreter to the vanilla `python` interpreter. It provides an interactive command-line based interpreter with
 various convenience features and commands.  You should have IPython on your system if you installed
 [Anaconda Distribution](http://carpentries.github.io/workshop-template/#python).
 
-To start using IPython, execute:
+To start using IPython from the prompt, execute:
 ~~~
 $ ipython
 ~~~
