@@ -28,13 +28,14 @@ So, we want to:
 1. Calculate the average inflammation per day across all patients.
 2. Plot the result to discuss and share with colleagues.
 
-To do all that, we'll have to learn a little bit about programming.
+To do all that, we'll have to learn a little bit about programming. In the first half of the course
+we'll introduce the concepts of Python and in the second half we'll apply these techniques to 
+the data to perform the analysis.
 
 > ## Prerequisites
 >
-> You need to understand the concepts of **files** and **directories** and how to start a Python
-> interpreter before tackling this lesson. This lesson sometimes references Jupyter
-> Notebook although you can use any Python interpreter mentioned in the [Setup](setup/).
+> You need to understand the concepts of **files** and **directories** and have a basic knowledge
+> of Shell before tackling this lesson
 >
 > The commands in this lesson pertain to **Python 3**.
 {: .prereq}
