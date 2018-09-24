@@ -1,52 +1,53 @@
 ---
-title: Analyzing Patient Data
+title: Reading in Tabular Data
 teaching: 60
 exercises: 30
 questions:
-- "How can I process tabular data files in Python?"
+- "How can I load tabular data files in Python?"
 objectives:
-- "Explain what a library is and what libraries are used for."
-- "Import a Python library and use the functions it contains."
 - "Read tabular data from a file into a program."
-- "Assign values to variables."
 - "Select individual values and subsections from data."
 - "Perform operations on arrays of data."
-- "Plot simple graphs from data."
 keypoints:
-- "Import a library into a program using `import libraryname`."
 - "Use the `numpy` library to work with arrays in Python."
-- "Use `variable = value` to assign a value to a variable in order to record it in memory."
-- "Variables are created on demand whenever a value is assigned to them."
-- "Use `print(something)` to display the value of `something`."
 - "The expression `array.shape` gives the shape of an array."
 - "Use `array[x, y]` to select a single element from a 2D array."
-- "Array indices start at 0, not 1."
-- "Use `low:high` to specify a `slice` that includes the indices from `low` to `high-1`."
-- "All the indexing and slicing that works on arrays also works on strings."
-- "Use `# some kind of explanation` to add comments to programs."
+- "All the indexing and slicing that works on strings and lists also works on arrays."
 - "Use `numpy.mean(array)`, `numpy.max(array)`, and `numpy.min(array)` to calculate simple statistics."
 - "Use `numpy.mean(array, axis=0)` or `numpy.mean(array, axis=1)` to calculate statistics across the specified axis."
-- "Use the `pyplot` library from `matplotlib` for creating simple visualizations."
 ---
 
 In this lesson we will take what we've learnt about Python and start applying it to our arthritis
-inflammation data by loading some data in and producing some plots.
+inflammation data by loading some data in and performing the first bits of analysis.
 
-[SWITCHBACK TO IPYTHON, CORRECT PATH]
+For this part, we would recommend switching back to IPython while you're still exploring
+the datasets as it will print out the **large** tables of data in a sensible way!
 
 ## Loading data into Python
+
 In order to load our inflammation data, we are going to use a library called
-[NumPy](http://docs.scipy.org/doc/numpy/ "NumPy Documentation").  In general you should use this
-library if you want to do fancy things with numbers.
+[NumPy](http://docs.scipy.org/doc/numpy/ "NumPy Documentation"). This module contains many
+numerical routines for data analysis and we will only be scratching the surface of what it can do
+in this course --- it is well worth having a look to see what else is there!
 
+> ## Load in the data
+>
+> The arthritis data is recorded in comma-separated list files 
+> To load this, use the function `loadtxt` provided by `numpy` using the `fname`
+> argument for the filename `inflammation-01.csv` and `delimiter` argument set as `,`. 
+> Assign this to a variable and the `print` the variable to see what has been loaded.
+> 
+> > ## Solution
+> > ~~~
+> > import numpy
+> > data = numpy.loadtxt(fname='inflammation-01.csv', delimiter=',')
+> > print(data)
+> > ~~~
+> > {: .language-python}
+> {: .solution}
+{: .challenge}
 
-Once we've imported the library, we can ask the library to read our data
-file for us:
-
-~~~
-numpy.loadtxt(fname='inflammation-01.csv', delimiter=',')
-~~~
-{: .language-python}
+You should hopefully have found the output looking like this:
 
 ~~~
 array([[ 0.,  0.,  1., ...,  3.,  0.,  0.],
@@ -59,54 +60,16 @@ array([[ 0.,  0.,  1., ...,  3.,  0.,  0.],
 ~~~
 {: .output}
 
-
-Since we haven't told it to do anything else with the function's output,
-nothing happens.
-In this case,
-that output is the data we just loaded.
-By default,
+The `loadtxt` function has loaded all the data from the `inflammation-01.csv` file and stored it
+in an object. By default,
 only a few rows and columns are shown
 (with `...` to omit elements when displaying big arrays).
 To save space,
 Python displays numbers as `1.` instead of `1.0`
 when there's nothing interesting after the decimal point.
 
-Our call to `numpy.loadtxt` read our file
-but didn't save the data in memory.
-To do that,
-we need to assign the array to a variable. Just as we can assign a single value to a variable, we
-can also assign an array of values to a variable using the same syntax.  Let's re-run
-`numpy.loadtxt` and save the returned data:
-
-~~~
-data = numpy.loadtxt(fname='inflammation-01.csv', delimiter=',')
-~~~
-{: .language-python}
-
-This statement doesn't produce any output because we've assigned the output to the variable `data`.
-If we want to check that the data have been loaded,
-we can print the variable's value:
-
-~~~
-print(data)
-~~~
-{: .language-python}
-
-~~~
-[[ 0.  0.  1. ...,  3.  0.  0.]
- [ 0.  1.  2. ...,  1.  0.  1.]
- [ 0.  1.  1. ...,  2.  1.  1.]
- ...,
- [ 0.  1.  1. ...,  1.  1.  1.]
- [ 0.  0.  0. ...,  0.  2.  0.]
- [ 0.  0.  1. ...,  1.  1.  0.]]
-~~~
-{: .output}
-
-Now that the data are in memory,
-we can manipulate them.
-First,
-let's ask what [type]({{ page.root }}/reference/#type) of thing `data` refers to:
+This object looks a bit like a list of lists (note the square brackets!) but let's check 
+exactly what it is by using the `type` function:
 
 ~~~
 print(type(data))
@@ -126,53 +89,33 @@ These data correspond to arthritis patients' inflammation.
 The rows are the individual patients, and the columns
 are their daily inflammation measurements.
 
-> ## Data Type
-> [MAKE EXERCISE]
-> A Numpy array contains one or more elements
-> of the same type. The `type` function will only tell you that
-> a variable is a NumPy array but won't tell you the type of
-> thing inside the array.
-> We can find out the type
-> of the data contained in the NumPy array.
+> ## Data Type and Shape
+> 
+> When we created the variable `data` to store our arthritis data, we didn't just create the 
+> array; we also created information about the array, called 
+> [members]({{ page.root }}/reference/#member) or attributes. These members are accessed just
+> like functions on an object or from a module using the `.` operator.
 >
-> ~~~
-> print(data.dtype)
-> ~~~
-> {: .language-python}
->
-> ~~~
-> dtype('float64')
-> ~~~
-> {: .output}
->
-> This tells us that the NumPy array's elements are
-> [floating-point numbers]({{ page.root }}/reference/#floating-point number).
-{: .callout}
+> Use the `dtype` and `shape` members of your `data` variable to find out what the array contains
+> and how many rows and columns it has.
+> > ## Solution
+> > ~~~
+> > print(data.dtype)
+> > print(data.shape)
+> > ~~~
+> > {: .language-python}
+> {: .solution}
+{: .challenge}
 
-With the following command, we can see the array's [shape]({{ page.root }}/reference/#shape):
-
-~~~
-print(data.shape)
-~~~
-{: .language-python}
-
-~~~
-(60, 40)
-~~~
-{: .output}
-
-The output tells us that the `data` array variable contains 60 rows and 40 columns. When we
-created the variable `data` to store our arthritis data, we didn't just create the array; we also
-created information about the array, called [members]({{ page.root }}/reference/#member) or
-attributes. This extra information describes `data` in the same way an adjective describes a noun.
-`data.shape` is an attribute of `data` which describes the dimensions of `data`. We use the same
-dotted notation for the attributes of variables that we use for the functions in libraries because
-they have the same part-and-whole relationship.
+This should have told you that the array contains `float64` or floating point numbers and
+has 60 rows and 40 columns. 
 
 If we want to get a single number from the array, we must provide an
 [index]({{ page.root }}/reference/#index) in square brackets after the variable name, just as we
-do in math when referring to an element of a matrix.  Our inflammation data has two dimensions, so
-we will need to use two indices to refer to one specific value:
+do in math when referring to an element of a matrix and how we accessed elements in strings and
+lists. However, our inflammation data has two dimensions, so
+we will need to use two indices to refer to one specific value. Here is where NumPy arrays differ
+significantly from normal lists in that you can give both indices in the square brackets:
 
 ~~~
 print('first value in data:', data[0, 0])
@@ -194,26 +137,8 @@ middle value in data: 13.0
 ~~~
 {: .output}
 
-The expression `data[30, 20]` accesses the element at row 30, column 20. While this expression may
-not surprise you,
- `data[0, 0]` might.
-Programming languages like Fortran, MATLAB and R start counting at 1
-because that's what human beings have done for thousands of years.
-Languages in the C family (including C++, Java, Perl, and Python) count from 0
-because it represents an offset from the first value in the array (the second
-value is offset by one index from the first value). This is closer to the way
-that computers represent arrays (if you are interested in the historical
-reasons behind counting indices from zero, you can read
-[Mike Hoye's blog post](http://exple.tive.org/blarg/2013/10/22/citation-needed/)).
-As a result,
-if we have an M×N array in Python,
-its indices go from 0 to M-1 on the first axis
-and 0 to N-1 on the second.
-It takes a bit of getting used to,
-but one way to remember the rule is that
-the index is how many steps we have to take from the start to get the item we want.
-
-![Zero Index](../fig/python-zero-index.png)
+The expression `data[30, 20]` accesses the element at row 30, column 20. As with lists, NumPy arrays
+are zero-indexed and so start from (0,0).
 
 > ## In the Corner
 >
@@ -224,8 +149,8 @@ the index is how many steps we have to take from the start to get the item we wa
 > but different from the Cartesian coordinates.
 > The indices are (row, column) instead of (column, row) for the same reason,
 > which can be confusing when plotting data.
+> ![Zero Index](../fig/python-zero-index.png)
 {: .callout}
-
 
 Arrays also know how to perform common mathematical operations on their values.  The simplest
 operations with data are arithmetic: addition, subtraction, multiplication, and division.  When you
@@ -284,6 +209,10 @@ tripledata:
  [ 6.  6.  3.  3.]]
 ~~~
 {: .output}
+
+
+
+
 
 Often, we want to do more than add, subtract, multiply, and divide array elements.  NumPy knows how
 to do more complex operations, too.  If we want to find the average inflammation for all patients on
@@ -459,142 +388,6 @@ print(numpy.mean(data, axis=1))
 
 which is the average inflammation per patient across all days.
 
-## Visualizing data
-The mathematician Richard Hamming once said, "The purpose of computing is insight, not numbers," and
-the best way to develop insight is often to visualize data.  Visualization deserves an entire
-lecture of its own, but we can explore a few features of Python's `matplotlib` library here.  While
-there is no official plotting library, `matplotlib` is the _de facto_ the standard.  First, we will
-import the `pyplot` module from `matplotlib` and use two of its functions to create and display a
-heat map of our data:
-
-~~~
-import matplotlib.pyplot
-image = matplotlib.pyplot.imshow(data)
-matplotlib.pyplot.show()
-~~~
-{: .language-python}
-
-![Heatmap of the Data](../fig/01-numpy_71_0.png)
-
-Blue pixels in this heat map represent low values, while yellow pixels represent high values.  As we
-can see, inflammation rises and falls over a 40-day period.
-
-> ## Some IPython Magic
->
-> If you're using an IPython / Jupyter notebook,
-> you'll need to execute the following command
-> in order for your matplotlib images to appear
-> in the notebook when `show()` is called:
->
-> ~~~
-> %matplotlib inline
-> ~~~
-> {: .language-python}
->
-> The `%` indicates an IPython magic function -
-> a function that is only valid within the notebook environment.
-> Note that you only have to execute this function once per notebook.
-{: .callout}
-
-Let's take a look at the average inflammation over time:
-
-~~~
-ave_inflammation = numpy.mean(data, axis=0)
-ave_plot = matplotlib.pyplot.plot(ave_inflammation)
-matplotlib.pyplot.show()
-~~~
-{: .language-python}
-
-![Average Inflammation Over Time](../fig/01-numpy_73_0.png)
-
-Here, we have put the average per day across all patients in the variable `ave_inflammation`, then
-asked `matplotlib.pyplot` to create and display a line graph of those values.  The result is a
-roughly linear rise and fall, which is suspicious: we might instead expect a sharper rise and slower
-fall.  Let's have a look at two other statistics:
-
-~~~
-max_plot = matplotlib.pyplot.plot(numpy.max(data, axis=0))
-matplotlib.pyplot.show()
-~~~
-{: .language-python}
-
-![Maximum Value Along The First Axis](../fig/01-numpy_75_1.png)
-
-~~~
-min_plot = matplotlib.pyplot.plot(numpy.min(data, axis=0))
-matplotlib.pyplot.show()
-~~~
-{: .language-python}
-
-![Minimum Value Along The First Axis](../fig/01-numpy_75_3.png)
-
-The maximum value rises and falls smoothly, while the minimum seems to be a step function.  Neither
-trend seems particularly likely, so either there's a mistake in our calculations or something is
-wrong with our data.  This insight would have been difficult to reach by examining the numbers
-themselves without visualization tools.
-
-### Grouping plots
-You can group similar plots in a single figure using subplots.
-This script below uses a number of new commands. The function `matplotlib.pyplot.figure()`
-creates a space into which we will place all of our plots. The parameter `figsize`
-tells Python how big to make this space. Each subplot is placed into the figure using
-its `add_subplot` [method]({{ page.root }}/reference/#method). The `add_subplot` method takes 3
-parameters. The first denotes how many total rows of subplots there are, the second parameter
-refers to the total number of subplot columns, and the final parameter denotes which subplot
-your variable is referencing (left-to-right, top-to-bottom). Each subplot is stored in a
-different variable (`axes1`, `axes2`, `axes3`). Once a subplot is created, the axes can
-be titled using the `set_xlabel()` command (or `set_ylabel()`).
-Here are our three plots side by side:
-
-~~~
-import numpy
-import matplotlib.pyplot
-
-data = numpy.loadtxt(fname='inflammation-01.csv', delimiter=',')
-
-fig = matplotlib.pyplot.figure(figsize=(10.0, 3.0))
-
-axes1 = fig.add_subplot(1, 3, 1)
-axes2 = fig.add_subplot(1, 3, 2)
-axes3 = fig.add_subplot(1, 3, 3)
-
-axes1.set_ylabel('average')
-axes1.plot(numpy.mean(data, axis=0))
-
-axes2.set_ylabel('max')
-axes2.plot(numpy.max(data, axis=0))
-
-axes3.set_ylabel('min')
-axes3.plot(numpy.min(data, axis=0))
-
-fig.tight_layout()
-
-matplotlib.pyplot.show()
-~~~
-{: .language-python}
-
-![The Previous Plots as Subplots](../fig/01-numpy_80_0.png)
-
-The [call]({{ page.root }}/reference/#function-call) to `loadtxt` reads our data,
-and the rest of the program tells the plotting library
-how large we want the figure to be,
-that we're creating three subplots,
-what to draw for each one,
-and that we want a tight layout.
-(If we leave out that call to `fig.tight_layout()`,
-the graphs will actually be squeezed together more closely.)
-
-> ## Scientists Dislike Typing
->
-> We will always use the syntax `import numpy` to import NumPy.
-> However, in order to save typing, it is
-> [often suggested](http://www.scipy.org/getting-started.html#an-example-script)
-> to make a shortcut like so: `import numpy as np`.
-> If you ever see Python code online using a NumPy function with `np`
-> (for example, `np.loadtxt(...)`), it's because they've used this shortcut.
-> When working with other people, it is important to agree on a convention of how common libraries
-> are imported.
-{: .callout}
 
 > ## Check Your Understanding
 >
@@ -1026,14 +819,5 @@ the graphs will actually be squeezed together more closely.)
 > >
 > {: .solution}
 {: .challenge}
-
-
-We would suggest creating a new Python file called `arthritis.py` in the `~/Desktop/swc-python/data`
-directory to store the commands you are using. As we have previously, you can then run them using:
-~~~
-cd ~/Desktop/swc-python/data
-python arthritis.py
-~~~
-{: .language-shell}
 
 {% include links.md %}

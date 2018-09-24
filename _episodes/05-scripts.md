@@ -33,7 +33,8 @@ plain text file that contains lines of Python code that will be executed one aft
 
 To create and edit a Python script, it is almost essential to use a text editor with syntax
 highlighting. For this course, we recommend using VSCode as provided by Microsoft. It's easily
-installed on Windows directly and macOS users can install and run it through Anaconda.
+installed on Windows either directly or through Anaconda
+and macOS users can install and run it through Anaconda as well.
 
 > ## Choosing a Good Text Editor
 >

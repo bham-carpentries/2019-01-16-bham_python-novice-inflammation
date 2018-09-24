@@ -63,6 +63,15 @@ first and third: 1 5
 > from zero rather than one. In other words, the first element of list is given by index `0`, the
 > second by index `1`, etc. Therefore the last element is given by the number of elements in the
 > list minus one, e.g. for the example above, the last element is `odds[3]`.
+> 
+> Programming languages like Fortran, MATLAB and R start counting at 1
+> because that's what human beings have done for thousands of years.
+> Languages in the C family (including C++, Java, Perl, and Python) count from 0
+> because it represents an offset from the first value in the array (the second
+> value is offset by one index from the first value). This is closer to the way
+> that computers represent arrays (if you are interested in the historical
+> reasons behind counting indices from zero, you can read
+> [Mike Hoye's blog post](http://exple.tive.org/blarg/2013/10/22/citation-needed/)).
 {: .callout}
 
 You can use negative indices to access elements from the end of the list as well, so the last
@@ -217,6 +226,17 @@ does not.
 {: .callout}
 
 There are many ways to change the contents of lists besides assigning new values to individual elements:
+
+~~~
+odds.append(11)
+print('odds after adding a value:', odds)
+~~~
+{: .language-python}
+
+~~~
+odds after adding a value: [1, 3, 5, 7, 11]
+~~~
+{: .output}
 
 ~~~
 del odds[0]
