@@ -29,194 +29,18 @@ keypoints:
 - "Use the `pyplot` library from `matplotlib` for creating simple visualizations."
 ---
 
-In this lesson we will learn how to work with arthritis inflammation datasets in Python. However,
-before we discuss how to deal with many data points, let's learn how to work with
-single data values.
+In this lesson we will take what we've learnt about Python and start applying it to our arthritis
+inflammation data by loading some data in and producing some plots.
 
-## Variables
-
-Any Python interpreter can be used as a calculator:
-~~~
-3 + 5 * 4
-~~~
-{: .language-python}
-~~~
-23
-~~~
-{: .output}
-
-This is great but not very interesting.
-To do anything useful with data, we need to assign its value to a _variable_.
-In Python, we can [assign]({{ page.root }}/reference/#assign) a value to a
-[variable]({{ page.root }}/reference/#variable), using the equals sign `=`.
-For example, to assign value `60` to a variable `weight_kg`, we would execute:
-
-~~~
-weight_kg = 60
-~~~
-{: .language-python}
-
-From now on, whenever we use `weight_kg`, Python will substitute the value we assigned to
-it. In essence, **a variable is just a name for a value**.
-
-In Python, variable names:
-
- - can include letters, digits, and underscores
- - cannot start with a digit
- - are [case sensitive]({{ page.root }}/reference/#case-sensitive).
-
-This means that, for example:
- - `weight0` is a valid variable name, whereas `0weight` is not
- - `weight` and `Weight` are different variables
-
-## Types of data
-Python knows various types of data. Three common ones are:
-
-* integer numbers
-* floating point numbers, and
-* strings.
-
-In the example above, variable `weight_kg` has an integer value of `60`.
-To create a variable with a floating point value, we can execute:
-
-~~~
-weight_kg = 60.0
-~~~
-{: .language-python}
-
-And to create a string we simply have to add single or double quotes around some text, for example:
-
-~~~
-weight_kg_text = 'weight in kilograms:'
-~~~
-{: .language-python}
-
-## Using Variables in Python
-To display the value of a variable to the screen in Python, we can use the `print` function:
-
-~~~
-print(weight_kg)
-~~~
-{: .language-python}
-
-~~~
-60
-~~~
-{: .output}
-
-We can display multiple things at once using only one `print` command:
-
-~~~
-print(weight_kg_text, weight_kg)
-~~~
-{: .language-python}
-~~~
-weight in kilograms: 60
-~~~
-{: .output}
-
-Moreover, we can do arithmetics with variables right inside the `print` function:
-
-~~~
-print('weight in pounds:', 2.2 * weight_kg)
-~~~
-{: .language-python}
-
-~~~
-weight in pounds: 132.0
-~~~
-{: .output}
-
-The above command, however, did not change the value of `weight_kg`:
-~~~
-print(weight_kg)
-~~~
-{: .language-python}
-
-~~~
-60
-~~~
-{: .output}
-
-To change the value of the `weight_kg` variable, we have to
-**assign** `weight_kg` a new value using the equals `=` sign:
-
-~~~
-weight_kg = 65.0
-print('weight in kilograms is now:', weight_kg)
-~~~
-{: .language-python}
-
-~~~
-weight in kilograms is now: 65.0
-~~~
-{: .output}
-
-A variable is analogous to a sticky note with a name written on it:
-assigning a value to a variable is like putting that sticky note on a particular value.
-
-![Variables as Sticky Notes](../fig/python-sticky-note-variables-01.svg)
-
-This means that assigning a value to one variable does **not** change the values of other variables.
-For example, let's store the subject's weight in pounds in its own variable:
-
-~~~
-# There are 2.2 pounds per kilogram
-weight_lb = 2.2 * weight_kg
-print(weight_kg_text, weight_kg, 'and in pounds:', weight_lb)
-~~~
-{: .language-python}
-
-~~~
-weight in kilograms: 65.0 and in pounds: 143.0
-~~~
-{: .output}
-
-![Creating Another Variable](../fig/python-sticky-note-variables-02.svg)
-
-Let's now change `weight_kg`:
-
-~~~
-weight_kg = 100.0
-print('weight in kilograms is now:', weight_kg, 'and weight in pounds is still:', weight_lb)
-~~~
-{: .language-python}
-
-~~~
-weight in kilograms is now: 100.0 and weight in pounds is still: 143.0
-~~~
-{: .output}
-
-![Updating a Variable](../fig/python-sticky-note-variables-03.svg)
-
-Since `weight_lb` doesn't remember where its value came from,
-it isn't automatically updated when `weight_kg` changes.
-
-
-
-Words are useful, but what's more useful are the sentences and stories we build with them.
-Similarly, while a lot of powerful, general tools are built into languages like Python,
-specialized tools built up from these basic units live in
-[libraries]({{ page.root }}/reference/#library)
-that can be called upon when needed.
+[SWITCHBACK TO IPYTHON, CORRECT PATH]
 
 ## Loading data into Python
-In order to load our inflammation data, we need to access
-([import]({{ page.root }}/reference/#import) in Python terminology) a library called
+In order to load our inflammation data, we are going to use a library called
 [NumPy](http://docs.scipy.org/doc/numpy/ "NumPy Documentation").  In general you should use this
-library if you want to do fancy things with numbers, especially if you have matrices or arrays.  We
-can import NumPy using:
+library if you want to do fancy things with numbers.
 
-~~~
-import numpy
-~~~
-{: .language-python}
 
-Importing a library is like getting a piece of lab equipment out of a storage locker and setting it
-up on the bench. Libraries provide additional functionality to the basic Python package, much like
-a new piece of equipment adds functionality to a lab space. Just like in the lab, importing too
-many libraries can sometimes complicate and slow down your programs - so we only import what we
-need for each program. Once we've imported the library, we can ask the library to read our data
+Once we've imported the library, we can ask the library to read our data
 file for us:
 
 ~~~
@@ -235,23 +59,9 @@ array([[ 0.,  0.,  1., ...,  3.,  0.,  0.],
 ~~~
 {: .output}
 
-The expression `numpy.loadtxt(...)` is a [function call]({{ page.root }}/reference/#function-call)
-that asks Python to run the [function]({{ page.root }}/reference/#function) `loadtxt` which
-belongs to the `numpy` library. This [dotted notation]({{ page.root }}/reference/#dotted-notation)
-is used everywhere in Python: the thing that appears before the dot contains the thing that
-appears after.
-
-As an example, John Smith is the John that belongs to the Smith family,
-We could use the dot notation to write his name `smith.john`,
-just as `loadtxt` is a function that belongs to the `numpy` library.
-
-`numpy.loadtxt` has two [parameters]({{ page.root }}/reference/#parameter): the name of the file
-we want to read and the [delimiter]({{ page.root }}/reference/#delimiter) that separates values on
-a line. These both need to be character strings (or [strings]({{ page.root }}/reference/#string)
-for short), so we put them in quotes.
 
 Since we haven't told it to do anything else with the function's output,
-the notebook displays it.
+nothing happens.
 In this case,
 that output is the data we just loaded.
 By default,
@@ -310,12 +120,14 @@ print(type(data))
 
 The output tells us that `data` currently refers to
 an N-dimensional array, the functionality for which is provided by the NumPy library.
+These arrays are similar to lists but you can do a lot more with them and they are
+used throughout the numpy library.
 These data correspond to arthritis patients' inflammation.
 The rows are the individual patients, and the columns
 are their daily inflammation measurements.
 
 > ## Data Type
->
+> [MAKE EXERCISE]
 > A Numpy array contains one or more elements
 > of the same type. The `type` function will only tell you that
 > a variable is a NumPy array but won't tell you the type of
@@ -414,66 +226,6 @@ the index is how many steps we have to take from the start to get the item we wa
 > which can be confusing when plotting data.
 {: .callout}
 
-## Slicing data
-An index like `[30, 20]` selects a single element of an array,
-but we can select whole sections as well.
-For example,
-we can select the first ten days (columns) of values
-for the first four patients (rows) like this:
-
-~~~
-print(data[0:4, 0:10])
-~~~
-{: .language-python}
-
-~~~
-[[ 0.  0.  1.  3.  1.  2.  4.  7.  8.  3.]
- [ 0.  1.  2.  1.  2.  1.  3.  2.  2.  6.]
- [ 0.  1.  1.  3.  3.  2.  6.  2.  5.  9.]
- [ 0.  0.  2.  0.  4.  2.  2.  1.  6.  7.]]
-~~~
-{: .output}
-
-The [slice]({{ page.root }}/reference/#slice) `0:4` means, "Start at index 0 and go up to, but not
-including, index 4."Again, the up-to-but-not-including takes a bit of getting used to, but the
-rule is that the difference between the upper and lower bounds is the number of values in the slice.
-
-We don't have to start slices at 0:
-
-~~~
-print(data[5:10, 0:10])
-~~~
-{: .language-python}
-
-~~~
-[[ 0.  0.  1.  2.  2.  4.  2.  1.  6.  4.]
- [ 0.  0.  2.  2.  4.  2.  2.  5.  5.  8.]
- [ 0.  0.  1.  2.  3.  1.  2.  3.  5.  3.]
- [ 0.  0.  0.  3.  1.  5.  6.  5.  5.  8.]
- [ 0.  1.  1.  2.  1.  3.  5.  3.  5.  8.]]
-~~~
-{: .output}
-
-We also don't have to include the upper and lower bound on the slice.  If we don't include the lower
-bound, Python uses 0 by default; if we don't include the upper, the slice runs to the end of the
-axis, and if we don't include either (i.e., if we just use ':' on its own), the slice includes
-everything:
-
-~~~
-small = data[:3, 36:]
-print('small is:')
-print(small)
-~~~
-{: .language-python}
-The above example selects rows 0 through 2 and columns 36 through to the end of the array.
-
-~~~
-small is:
-[[ 2.  3.  0.  0.]
- [ 1.  1.  0.  1.]
- [ 2.  2.  1.  1.]]
-~~~
-{: .output}
 
 Arrays also know how to perform common mathematical operations on their values.  The simplest
 operations with data are arithmetic: addition, subtraction, multiplication, and division.  When you

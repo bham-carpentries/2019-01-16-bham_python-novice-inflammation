@@ -29,10 +29,10 @@ If you're using Windows, you should run git-bash as you did for the shell lesson
 export PATH="$PATH:/c/Users/$USERNAME/AppData/Local/Continuum/anaconda3/Scripts/:/c/Users/$USERNAME/AppData/Local/Continuum/anaconda3/"
 ```
 
-### Navigate to the `data` folder
+### Navigate to the `dswc-python` folder
 
 Whether you are on macOS or Windows you should now be at a Shell prompt that is capable of running
-Python. You should now navigate to your data directory:
+Python. You should now navigate to your `swc-python` directory:
 
 ~~~
 $ cd ~/Desktop/swc-python/data
