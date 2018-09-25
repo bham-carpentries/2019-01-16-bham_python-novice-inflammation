@@ -1,6 +1,6 @@
 ---
 title: Reading in Tabular Data
-teaching: 60
+teaching: 20
 exercises: 30
 questions:
 - "How can I load tabular data files in Python?"
@@ -210,10 +210,6 @@ tripledata:
 ~~~
 {: .output}
 
-
-
-
-
 Often, we want to do more than add, subtract, multiply, and divide array elements.  NumPy knows how
 to do more complex operations, too.  If we want to find the average inflammation for all patients on
 all days, for example, we can ask NumPy to compute `data`'s mean value:
@@ -231,28 +227,20 @@ print(numpy.mean(data))
 `mean` is a [function]({{ page.root }}/reference/#function) that takes
 an array as an [argument]({{ page.root }}/reference/#argument).
 
-> ## Not All Functions Have Input
->
-> Generally, a function uses inputs to produce outputs.
-> However, some functions produce outputs without
-> needing any input. For example, checking the current time
-> doesn't require any input.
->
-> ~~~
-> import time
-> print(time.ctime())
-> ~~~
-> {: .language-python}
->
-> ~~~
-> 'Sat Mar 26 13:07:33 2016'
-> ~~~
-> {: .output}
->
-> For functions that don't take in any arguments,
-> we still need parentheses (`()`)
-> to tell Python to go and do something for us.
-{: .callout}
+> ## Mean Value for a subset of data
+> 
+> Can you use what you know about slicing to calculate the mean value for a single patient (row)
+> and column (day)?
+> > ## Solution
+> > ~~~
+> > # Single patient mean
+> > print(numpy.mean(data[0,:]))
+> > # Single day mean
+> > print(numpy.mean(data[:,0]))
+> > ~~~
+> > {: .language-python}
+> {: .solution}
+{: .challenge}
 
 NumPy has lots of useful functions that take an array as input.
 Let's use three of those functions to get some descriptive values about the dataset.
@@ -278,56 +266,31 @@ standard deviation: 4.61383319712
 ~~~
 {: .output}
 
-> ## Mystery Functions in IPython
+> ## Sorting Out References
 >
-> How did we know what functions NumPy has and how to use them?
-> If you are working in the IPython/Jupyter Notebook, there is an easy way to find out.
-> If you type the name of something followed by a dot, then you can use tab completion
-> (e.g. type `numpy.` and then press tab)
-> to see a list of all functions and attributes that you can use. After selecting one, you
-> can also add a question mark (e.g. `numpy.cumprod?`), and IPython will return an
-> explanation of the method! This is the same as doing `help(numpy.cumprod)`.
-{: .callout}
+> What does the following program print out?
+>
+> ~~~
+> first, second = 'Grace', 'Hopper'
+> third, fourth = second, first
+> print(third, fourth)
+> ~~~
+> {: .language-python}
+>
+> > ## Solution
+> > ~~~
+> > Hopper Grace
+> > ~~~
+> > {: .output}
+> {: .solution}
+{: .challenge}
 
 When analyzing data, though,
 we often want to look at variations in statistical values,
-such as the maximum inflammation per patient
-or the average inflammation per day.
-One way to do this is to create a new temporary array of the data we want,
-then ask it to do the calculation:
-
-~~~
-patient_0 = data[0, :] # 0 on the first axis (rows), everything on the second (columns)
-print('maximum inflammation for patient 0:', patient_0.max())
-~~~
-{: .language-python}
-
-~~~
-maximum inflammation for patient 0: 18.0
-~~~
-{: .output}
-
-Everything in a line of code following the '#' symbol is a
-[comment]({{ page.root }}/reference/#comment) that is ignored by Python.
-Comments allow programmers to leave explanatory notes for other
-programmers or their future selves.
-
-We don't actually need to store the row in a variable of its own.
-Instead, we can combine the selection and the function call:
-
-~~~
-print('maximum inflammation for patient 2:', numpy.max(data[2, :]))
-~~~
-{: .language-python}
-
-~~~
-maximum inflammation for patient 2: 19.0
-~~~
-{: .output}
-
-What if we need the maximum inflammation for each patient over all days (as in the
-next diagram on the left) or the average for each day (as in the
-diagram on the right)? As the diagram below shows, we want to perform the
+such as the maximum inflammation per patient (as in the
+next diagram on the left)
+or the average inflammation per day  (as in the
+diagram on the right).  As the diagram below shows, we want to perform the
 operation across an axis:
 
 ![Operations Across Axes](../fig/python-operations-across-axes.png)
@@ -354,7 +317,7 @@ print(numpy.mean(data, axis=0))
 ~~~
 {: .output}
 
-As a quick check,
+ As a quick check,
 we can ask this array what its shape is:
 
 ~~~
@@ -368,7 +331,8 @@ print(numpy.mean(data, axis=0).shape)
 {: .output}
 
 The expression `(40,)` tells us we have an N×1 vector,
-so this is the average inflammation per day for all patients.
+So each entry is the average inflammation over all patients for that day
+and there is a single entry per day.
 If we average across axis 1 (columns in our 2D example), we get:
 
 ~~~
@@ -387,242 +351,6 @@ print(numpy.mean(data, axis=1))
 {: .output}
 
 which is the average inflammation per patient across all days.
-
-
-> ## Check Your Understanding
->
-> What values do the variables `mass` and `age` have after each statement in the following program?
-> Test your answers by executing the commands.
->
-> ~~~
-> mass = 47.5
-> age = 122
-> mass = mass * 2.0
-> age = age - 20
-> ~~~
-> {: .language-python}
-{: .challenge}
-
-> ## Sorting Out References
->
-> What does the following program print out?
->
-> ~~~
-> first, second = 'Grace', 'Hopper'
-> third, fourth = second, first
-> print(third, fourth)
-> ~~~
-> {: .language-python}
->
-> > ## Solution
-> > ~~~
-> > Hopper Grace
-> > ~~~
-> > {: .output}
-> {: .solution}
-{: .challenge}
-
-> ## Slicing Strings
->
-> A section of an array is called a [slice]({{ page.root }}/reference/#slice).
-> We can take slices of character strings as well:
->
-> ~~~
-> element = 'oxygen'
-> print('first three characters:', element[0:3])
-> print('last three characters:', element[3:6])
-> ~~~
-> {: .language-python}
->
-> ~~~
-> first three characters: oxy
-> last three characters: gen
-> ~~~
-> {: .output}
->
-> What is the value of `element[:4]`?
-> What about `element[4:]`?
-> Or `element[:]`?
->
-> > ## Solution
-> > ~~~
-> > oxyg
-> > en
-> > oxygen
-> > ~~~
-> > {: .output}
-> {: .solution}
->
-> What is `element[-1]`?
-> What is `element[-2]`?
->
-> > ## Solution
-> > ~~~
-> > n
-> > e
-> > ~~~
-> > {: .output}
-> {: .solution}
->
-> Given those answers,
-> explain what `element[1:-1]` does.
->
-> > ## Solution
-> > Creates a substring from index 1 up to (not including) the final index,
-> > effectively removing the first and last letters from 'oxygen'
-> {: .solution}
-{: .challenge}
-
-> ## Thin Slices
->
-> The expression `element[3:3]` produces an [empty string]({{ page.root }}/reference/#empty-string),
-> i.e., a string that contains no characters.
-> If `data` holds our array of patient data,
-> what does `data[3:3, 4:4]` produce?
-> What about `data[3:3, :]`?
->
-> > ## Solution
-> > ~~~
-> > []
-> > []
-> > ~~~
-> > {: .output}
-> {: .solution}
-{: .challenge}
-
-> ## Plot Scaling
->
-> Why do all of our plots stop just short of the upper end of our graph?
->
-> > ## Solution
-> > Because matplotlib normally sets x and y axes limits to the min and max of our data
-> > (depending on data range)
-> {: .solution}
->
-> If we want to change this, we can use the `set_ylim(min, max)` method of each 'axes',
-> for example:
->
-> ~~~
-> axes3.set_ylim(0,6)
-> ~~~
-> {: .language-python}
->
-> Update your plotting code to automatically set a more appropriate scale.
-> (Hint: you can make use of the `max` and `min` methods to help.)
->
-> > ## Solution
-> > ~~~
-> > # One method
-> > axes3.set_ylabel('min')
-> > axes3.plot(numpy.min(data, axis=0))
-> > axes3.set_ylim(0,6)
-> > ~~~
-> > {: .language-python}
-> {: .solution}
->
-> > ## Solution
-> > ~~~
-> > # A more automated approach
-> > min_data = numpy.min(data, axis=0)
-> > axes3.set_ylabel('min')
-> > axes3.plot(min_data)
-> > axes3.set_ylim(numpy.min(min_data), numpy.max(min_data) * 1.1)
-> > ~~~
-> > {: .language-python}
-> {: .solution}
-{: .challenge}
-
-> ## Drawing Straight Lines
->
-> In the center and right subplots above, we expect all lines to look like step functions because
-> non-integer value are not realistic for the minimum and maximum values. However, you can see
-> that the lines are not always vertical or horizontal, and in particular the step function
-> in the subplot on the right looks slanted. Why is this?
->
-> > ## Solution
-> > Because matplotlib interpolates (draws a straight line) between the points.
-> > One way to do avoid this is to use the Matplotlib `drawstyle` option:
-> >
-> > ~~~
-> > import numpy
-> > import matplotlib.pyplot
-> >
-> > data = numpy.loadtxt(fname='inflammation-01.csv', delimiter=',')
-> >
-> > fig = matplotlib.pyplot.figure(figsize=(10.0, 3.0))
-> >
-> > axes1 = fig.add_subplot(1, 3, 1)
-> > axes2 = fig.add_subplot(1, 3, 2)
-> > axes3 = fig.add_subplot(1, 3, 3)
-> >
-> > axes1.set_ylabel('average')
-> > axes1.plot(numpy.mean(data, axis=0), drawstyle='steps-mid')
-> >
-> > axes2.set_ylabel('max')
-> > axes2.plot(numpy.max(data, axis=0), drawstyle='steps-mid')
-> >
-> > axes3.set_ylabel('min')
-> > axes3.plot(numpy.min(data, axis=0), drawstyle='steps-mid')
-> >
-> > fig.tight_layout()
-> >
-> > matplotlib.pyplot.show()
-> > ~~~
-> > {: .language-python}
-> ![Plot with step lines](../fig/01-numpy_exercise_0.png)
-> {: .solution}
-{: .challenge}
-
-> ## Make Your Own Plot
->
-> Create a plot showing the standard deviation (`numpy.std`)
-> of the inflammation data for each day across all patients.
->
-> > ## Solution
-> > ~~~
-> > std_plot = matplotlib.pyplot.plot(numpy.std(data, axis=0))
-> > matplotlib.pyplot.show()
-> > ~~~
-> > {: .language-python}
-> {: .solution}
-{: .challenge}
-
-> ## Moving Plots Around
->
-> Modify the program to display the three plots on top of one another
-> instead of side by side.
->
-> > ## Solution
-> > ~~~
-> > import numpy
-> > import matplotlib.pyplot
-> >
-> > data = numpy.loadtxt(fname='inflammation-01.csv', delimiter=',')
-> >
-> > # change figsize (swap width and height)
-> > fig = matplotlib.pyplot.figure(figsize=(3.0, 10.0))
-> >
-> > # change add_subplot (swap first two parameters)
-> > axes1 = fig.add_subplot(3, 1, 1)
-> > axes2 = fig.add_subplot(3, 1, 2)
-> > axes3 = fig.add_subplot(3, 1, 3)
-> >
-> > axes1.set_ylabel('average')
-> > axes1.plot(numpy.mean(data, axis=0))
-> >
-> > axes2.set_ylabel('max')
-> > axes2.plot(numpy.max(data, axis=0))
-> >
-> > axes3.set_ylabel('min')
-> > axes3.plot(numpy.min(data, axis=0))
-> >
-> > fig.tight_layout()
-> >
-> > matplotlib.pyplot.show()
-> > ~~~
-> > {: .language-python}
-> {: .solution}
-{: .challenge}
 
 > ## Stacking Arrays
 >
@@ -665,56 +393,7 @@ which is the average inflammation per patient across all days.
 > ~~~
 > {: .output}
 >
-> Write some additional code that slices the first and last columns of `A`,
-> and stacks them into a 3x2 array.
-> Make sure to `print` the results to verify your solution.
->
-> > ## Solution
-> >
-> > A 'gotcha' with array indexing is that singleton dimensions
-> > are dropped by default. That means `A[:, 0]` is a one dimensional
-> > array, which won't stack as desired. To preserve singleton dimensions,
-> > the index itself can be a slice or array. For example, `A[:, :1]` returns
-> > a two dimensional array with one singleton dimension (i.e. a column
-> > vector).
-> >
-> > ~~~
-> > D = numpy.hstack((A[:, :1], A[:, -1:]))
-> > print('D = ')
-> > print(D)
-> > ~~~
-> > {: .language-python}
-> >
-> > ~~~
-> > D =
-> > [[1 3]
-> >  [4 6]
-> >  [7 9]]
-> > ~~~
-> > {: .output}
-> {: .solution}
->
-> > ## Solution
-> >
-> > An alternative way to achieve the same result is to use Numpy's
-> > delete function to remove the second column of A.
-> >
-> > ~~~
-> > D = numpy.delete(A, 1, 1)
-> > print('D = ')
-> > print(D)
-> > ~~~
-> > {: .language-python}
-> >
-> > ~~~
-> > D =
-> > [[1 3]
-> >  [4 6]
-> >  [7 9]]
-> > ~~~
-> > {: .output}
-> {: .solution}
-{: .challenge}
+{: .callout}
 
 > ## Change In Inflammation
 >
@@ -750,10 +429,11 @@ which is the average inflammation per patient across all days.
 > {: .language-python}
 >
 > Which axis would it make sense to use this function along?
+> How would you create an array of these changes?
 >
 > > ## Solution
-> > Since the row axis (0) is patients, it does not make sense to get the
-> > difference between two arbitrary patients. The column axis (1) is in
+> > Since the rows (axis 0) are patients, it does not make sense to get the
+> > difference between two arbitrary patients. The columns (axis 1) are in
 > > days, so the difference is the change in inflammation -- a meaningful
 > > concept.
 > >
@@ -774,6 +454,7 @@ which is the average inflammation per patient across all days.
 >
 > How would you find the largest change in inflammation for each patient? Does
 > it matter if the change in inflammation is an increase or a decrease?
+> Hint: Try to combine the `numpy.max()`, `numpy.diff()` and `numpy.absolute()` functions.
 >
 > > ## Solution
 > > By using the `numpy.max()` function after you apply the `numpy.diff()`
