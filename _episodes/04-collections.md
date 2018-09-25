@@ -222,7 +222,8 @@ does not.
 > `find` has one [parameter]({{ page.root }}/reference/#parameter): the sub-string to look 
 > for in the string
 > This is sent to the code referened by the `find` name (the **function**) and after this code
-> is run, it return the index of the sub-string (if found) and then continues
+> is run, it return the index of the sub-string (if found) and then continues. You can also have
+> functions that don't need any input, for example `my_str.split()`.
 {: .callout}
 
 There are many ways to change the contents of lists besides assigning new values to individual elements:

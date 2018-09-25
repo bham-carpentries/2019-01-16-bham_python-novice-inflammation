@@ -129,6 +129,98 @@ Real-life functions will usually be larger than the ones shown here --- typicall
 to a few dozen lines --- but they shouldn't ever be much longer than that,
 or the next person who reads it won't be able to understand what's going on.
 
+## Defining Defaults
+
+We have seen how to pass arguments to a function. If you don't pass these arguments, Python will
+complain:
+
+~~~
+print(fahr_to_kelvin())
+~~~
+{: .language-python}
+~~~
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-11-d31ad434dbd6> in <module>()
+----> 1 fahr_to_kelvin()
+
+TypeError: fahr_to_kelvin() missing 1 required positional argument: 'temp_f'
+~~~
+{: .error}
+
+However, there are many times where we may not want to give a particular argument or have the
+function provide a default value. For example, let's say we write an expanded `print` function that
+will prepend anything that is printed by a label or message if requested. The majority of the time
+we want it to be a particular label but in some cases the code that calls the function 
+might want or need to change it. To avoid all calls to the
+function having to remember to include the same label, we can set the default instead:
+
+~~~
+def label_print( msg, label_str = ">>> " ):
+    print(label_str, msg)
+~~~
+{: .language-python}
+
+When calling this function we can now choose whether to leave out the defaulted argument or change it:
+
+~~~
+label_print("test1")
+label_print("test2", "$$$ ")
+~~~
+{: .language-python}
+~~~
+>>> test1
+$$$ test2
+~~~
+{: .output}
+
+This is handy:
+if we usually want a function to work one way,
+but occasionally need it to do something else,
+we can allow people to pass a parameter when they need to
+but provide a default to make the normal case easier.
+The example below shows how Python matches values to parameters:
+
+~~~
+def display(a=1, b=2, c=3):
+    print('a:', a, 'b:', b, 'c:', c)
+
+print('no parameters:')
+display()
+print('one parameter:')
+display(55)
+print('two parameters:')
+display(55, 66)
+~~~
+{: .language-python}
+
+~~~
+no parameters:
+a: 1 b: 2 c: 3
+one parameter:
+a: 55 b: 2 c: 3
+two parameters:
+a: 55 b: 66 c: 3
+~~~
+{: .output}
+
+As this example shows,
+parameters are matched up from left to right,
+and any that haven't been given a value explicitly get their default value.
+We can override this behavior by naming the value as we pass it in:
+
+~~~
+print('only setting the value of c')
+display(c=77)
+~~~
+{: .language-python}
+
+~~~
+only setting the value of c
+a: 1 b: 2 c: 77
+~~~
+{: .output}
+
 ## Readable functions
 
 Consider these two functions:

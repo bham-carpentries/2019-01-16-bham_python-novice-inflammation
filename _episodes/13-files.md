@@ -1,7 +1,7 @@
 ---
 title: Analyzing Data from Multiple Files
-teaching: 20
-exercises: 0
+teaching: 10
+exercises: 15
 questions:
 - "How can I do the same operations on many different files?"
 objectives:
@@ -111,7 +111,8 @@ where the maxima are a bit less regular, but the minima are consistently zero.
 > Plot the difference between the average of the first dataset
 > and the average of the second dataset,
 > i.e., the difference between the leftmost plot of the first two figures.
->
+> Hint: Don't forget that you can use arithmetic operators on arrays of the same
+> size, e.g. A + B, C - D, etc.
 > > ## Solution
 > > ~~~
 > > import glob
