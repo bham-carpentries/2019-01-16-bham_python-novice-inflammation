@@ -89,13 +89,13 @@ print(total)
 > Python.
 >
 > Either using the built in help system or Google, find the variable in the `sys` module that
-> corresponds to the command line arguments and write a loop to print out each one.
+> corresponds to the search path that python uses to find modules and write a loop to print out each one.
 > 
 > > ## Solution
 > > ~~~
 > > import sys
-> > for opt in sys.argv:
-> >    print(opt)
+> > for p in sys.path:
+> >    print(p)
 > > ~~~
 > > {: .language-python}
 > {: .solution}
