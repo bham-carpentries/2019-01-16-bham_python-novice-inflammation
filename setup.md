@@ -27,7 +27,9 @@ If you're using Windows, you should run git-bash as you did for the shell lesson
 
 ```
 export PATH="$PATH:/c/Users/$USERNAME/AppData/Local/Continuum/anaconda3/Scripts/:/c/Users/$USERNAME/AppData/Local/Continuum/anaconda3/"
+export PATH="$PATH:/c/ProgramData/Anaconda3/Scripts/:/c/ProgramData/Anaconda3/"
 ```
+The first line is if you installed Anaconda 3 as a user, the second is if you installed it as an admin. If you're unsure which you did, put in both!
 
 ### Navigate to the `swc-python` folder
 
